@@ -6,10 +6,10 @@ import ThirdPage from './ThirdPage';
 import FourthPage from './FourthPage';
 import FifthPage from './FifthPage';
 import { useNavigate } from 'react-router-dom';
-import useOnboardingContex from '../Hooks/UseOnboardingContex';
+import OnboardingContext from '../Context/OnboardingContext';
 
 const Onboarding = () => {
-    const {page, setPage} = useOnboardingContex();
+    const {page, setPage} = useContext(OnboardingContext);
 	const navigate = useNavigate();
   return (
 		<div className='bg-primaryColor min-w-full min-h-screen px-20 py-10'>
