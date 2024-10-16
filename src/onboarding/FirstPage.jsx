@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { robot } from '../assets/onboarding'
 import { FaStar } from 'react-icons/fa';
 import { IoTriangle } from 'react-icons/io5';
-import useOnboardingContex from '../Hooks/UseOnboardingContex';
+import OnboardingContext from '../Context/OnboardingContext';
 
 const FirstPage = () => {
-	const {title} = useOnboardingContex();
+	const {title} = useContext(OnboardingContext);
   return (
 		<div className='relative flex items-end w-full justify-center mt-16'>
 			<img
