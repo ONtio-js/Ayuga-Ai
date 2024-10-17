@@ -22,7 +22,7 @@ const UserRegister = () => {
 		const message = await HandleUserRegistration(credentials);
         if(typeof message == 'object'){
             setLoading(false)
-            return <Navigate to={'/dashboard'}/>
+            return <Navigate to={'/create-profile'}/>
         }else{
             setErrorMessage(message)
             setLoading(false)

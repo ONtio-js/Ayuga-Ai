@@ -4,7 +4,6 @@ import { reader } from '../assets/onboarding';
 
 const Dashboard = () => {
   return (
-		<Layout>
 			<div>
 				<h1 className='font-bold text-2xl'>Daily Quiz</h1>
 				<div>
@@ -20,8 +19,7 @@ const Dashboard = () => {
             <img src={reader} width={160} alt="" srcset="" />
 					</div>
 				</div>
-			</div>
-		</Layout>
+			</div>	
   );
 }
 

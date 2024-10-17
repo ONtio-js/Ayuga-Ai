@@ -35,7 +35,7 @@ const Login = () => {
 		console.log(message)
 	}
 	if(redirect){
-		return <Navigate to={'/create-profile'} />
+		return <Navigate to={'/dashboard'} />
 	}
   return (
 		<AuthLayout>

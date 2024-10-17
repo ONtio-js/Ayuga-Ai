@@ -11,6 +11,8 @@ import Login from './auth/Login';
 import Dashboard from './dashboard/Dashboard';
 import ResetPassword from './auth/ResetPassword';
 import ForgotPassword from './auth/ForgotPassword';
+import PromptChat from './dashboard/PromptChat';
+import Layout from './dashboard/Layout';
 function App() {
 	return (
 		<OnboardingProvider>
@@ -46,7 +48,7 @@ function App() {
 					/>
 					<Route
 						path='/dashboard'
-						element={<Dashboard />}
+						element={<Layout />}
 					/>
 				</Routes>
 			</UserContextProvider>

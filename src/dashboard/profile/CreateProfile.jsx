@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import SelectComponent from '../../components/SelectComponent';
 import axios from 'axios';
 import UserContext from '../../Context/UserContext';
+import { jwtDecode } from 'jwt-decode';
+import Loading from '../../components/Loading';
 
 const CreateProfile = () => {
 	const [details, setDetail] = useState({
@@ -17,16 +19,51 @@ const CreateProfile = () => {
 		strength: '',
 		age: '',
 		gender: '',
+		loading:false,
+		redirect:false,
+		errorMessage:''
 	});
-	const {user} = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const navigate = useNavigate();
+console.log(user)
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// const data = await axios.post('');
-			console.log(details);
-		} catch (error) {}
+			setDetail({...details,errorMessage:''})
+			setDetail({...details,loading:true})
+			const authUser = jwtDecode(user.access_token);
+			const data = await axios.post(
+				`https://ayuga.onrender.com/api/v1/students/${authUser.user_id}`,
+				{
+					academic_performance: '',
+					age: 25,
+					first_name: 'AYUGA',
+					interests: details.hobbies,
+					last_name: 'User',
+					personality_traits: [details.decsription],
+					skills: [details.strength],
+				},
+				{
+					headers: {
+						Authorization: 'Bearer ' + user.access_token,
+					},
+				}
+			);
+			if(data.status == 201){
+				setDetail({...details,loading:false});
+				setDetail({...details,redirect:true});
+			}
+		} catch (error) {
+			if (error.resposne.status == 401){
+				setDetail({...details,errorMessage:'Not Authorized'})
+			}else{
+				setDetail({...details,errorMessage:'internal server Error'})
+			}
+		}
 	};
+	if(details.redirect){
+		return navigate('/dashboard')
+	}
 	return (
 		<AuthLayout>
 			<h4 className='capitalize font-semibold  py-2 text-lg'>
@@ -252,13 +289,14 @@ const CreateProfile = () => {
 										gender: e.target.value,
 									})
 								}
-								value={details.gender}
 							/>
 						</div>
 					</div>
-					<div className='w-full flex items-center justify-center pt-56'>
+					{details.loading && (
+						<Loading />
+					)}
+					<div className='w-full flex items-center justify-center pt-48'>
 						<ButtonComponent
-							// onclick={() => navigate('/dashboard')}
 							title={'continue'}
 							style={
 								'bg-yellow capitalize drop-shadow-4xl px-12 py-3 rounded-3xl shadow-lg font-bold  '
